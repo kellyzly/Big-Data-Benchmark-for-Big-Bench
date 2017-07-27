@@ -856,3 +856,25 @@ SELECT * FROM ${hiveconf:reviewsTableName}${hiveconf:temporaryTableSuffix}
 
 -- !echo Drop temporary table: ${hiveconf:reviewsTableName}${hiveconf:temporaryTableSuffix};
 DROP TABLE ${hiveconf:reviewsTableName}${hiveconf:temporaryTableSuffix};
+analyze table ${hiveconf:customerTableName} compute statistics for columns;
+analyze table ${hiveconf:customerAddressTableName} compute statistics for columns;
+analyze table ${hiveconf:customerDemographicsTableName} compute statistics for columns;
+analyze table ${hiveconf:dateTableName} compute statistics for columns;
+analyze table ${hiveconf:householdDemographicsTableName} compute statistics for columns;
+analyze table ${hiveconf:incomeTableName} compute statistics for columns;
+analyze table ${hiveconf:itemTableName} compute statistics for columns;
+analyze table ${hiveconf:promotionTableName} compute statistics for columns;
+analyze table ${hiveconf:reasonTableName} compute statistics for columns;
+analyze table ${hiveconf:shipModeTableName} compute statistics for columns;
+analyze table ${hiveconf:storeTableName} compute statistics for columns;
+analyze table ${hiveconf:timeTableName} compute statistics for columns;
+analyze table ${hiveconf:warehouseTableName} compute statistics for columns;
+analyze table ${hiveconf:webSiteTableName} compute statistics for columns;
+analyze table ${hiveconf:webPageTableName} compute statistics for columns;
+analyze table ${hiveconf:inventoryTableName} compute statistics for columns;
+analyze table ${hiveconf:storeSalesTableName} compute statistics for columns;
+analyze table ${hiveconf:storeReturnsTableName} compute statistics for columns;
+analyze table ${hiveconf:webSalesTableName} compute statistics for columns;
+analyze table ${hiveconf:marketPricesTableName} compute statistics for columns;
+analyze table ${hiveconf:clickstreamsTableName} compute statistics for columns;
+analyze table ${hiveconf:reviewsTableName} compute statistics for columns;

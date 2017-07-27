@@ -31,8 +31,8 @@ set hive.optimize.sampling.orderby.percent=${hiveconf:bigbench.hive.optimize.sam
 set hive.optimize.sampling.orderby;
 set hive.optimize.sampling.orderby.number;
 set hive.optimize.sampling.orderby.percent;
-
-
+--test hive.merge.sparkfiles feature
+--set hive.merge.sparkfiles=true;
 --CREATE RESULT TABLE. Store query result externally in output_dir/qXXresult/
 DROP TABLE IF EXISTS ${hiveconf:RESULT_TABLE};
 CREATE TABLE ${hiveconf:RESULT_TABLE} (
@@ -46,6 +46,7 @@ STORED AS ${env:BIG_BENCH_hive_default_fileformat_result_table} LOCATION '${hive
 
 -- the real query part
 -- you may want to adapt: set hive.exec.reducers.bytes.per.reducer=xxxx;  Default Value: 1,000,000,000 prior to Hive 0.14.0; 256 MB (256,000,000) in Hive 0.14.0 and later
+--describe formatted product_reviews;
 INSERT INTO TABLE ${hiveconf:RESULT_TABLE}
 SELECT item_sk, review_sentence, sentiment, sentiment_word
 FROM (--wrap in additional FROM(), because Sorting/distribute by with UDTF in select clause is not allowed

@@ -17,6 +17,37 @@
 --###########################
 -- values: mr, tez, spark
 -- set hive.execution.engine=mr;
+set hive.log.explain.output=true;
+set hive.execution.engine=spark;
+--set hive.merge.sparkfiles=true;
+--set spark.home=/home/spark16/spark-1.6.2-bin-hadoop2-without-hive;
+--set spark.master=yarn;
+--set hive.enable.spark.execution=true;
+--set spark.eventLog.enabled=true;
+--set spark.eventLog.dir=hdfs://bdpe42:8020/eventLog/spark20;
+--set spark.eventLog.dir=hdfs://bdpe81:8020/eventLog/spark16;
+set spark.serializer=org.apache.spark.serializer.KryoSerializer;
+set hive.spark.job.monitor.timeout=3600s;
+set spark.network.timeout=3600;
+--set hive.spark.client.server.connect.timeout=3600s;
+set hive.merge.sparkfiles=false;
+--set spark.driver.memory=2g;
+--set spark.driver.memory=2048m;
+--set spark.executor.memory=8g;
+--set spark.executor.memory=6553m;
+--set spark.yarn.executor.memoryOverhead=1638;
+--set spark.executor.instances=6;
+--set spark.dynamicAllocation.enabled=true;
+--set spark.dynamicAllocation.executorIdleTimeout=60;
+--set spark.dynamicAllocation.minExecutors=0;
+--set spark.dynamicAllocation.schedulerBacklogTimeout=1;
+--set spark.executor.cores=5;
+--set spark.executor.memory=26g;
+--set spark.yarn.executor.memoryOverhead=6144;
+--set spark.executor.instances=2;
+--set spark.storage.memoryFraction=0.01;
+--set spark.shuffle.memoryFraction=0.5;
+--set spark.memory.useLegacyMode=true;
 
 -- ###########################
 -- parallel order by. required by queries:
@@ -41,7 +72,8 @@ set hive.default.fileformat=${env:BIG_BENCH_hive_default_fileformat_tmp_table};
 
 -- default is to keep the created result tables human readable.
 -- set hive.exec.compress.output=false;
--- set mapred.output.compression.codec=org.apache.hadoop.io.compress.DefaultCodec;
+set mapred.output.compression.codec=org.apache.hadoop.io.compress.DefaultCodec;
+--set mapred.output.compression.codec=org.apache.hadoop.io.compress.SnappyCodec;
 
 
 
@@ -63,7 +95,9 @@ set hive.default.fileformat=${env:BIG_BENCH_hive_default_fileformat_tmp_table};
 -- hives metric for estimating reducers is mostly controlled by the following settings. Node: Some Query functions like count(*) or Distinct will lead to hive always using only 1 reducer
 -- 1GB default
 -- set hive.exec.reducers.bytes.per.reducer=33554432;
-
+set hive.exec.reducers.bytes.per.reducer=256000000;
+--set hive.exec.reducers.bytes.per.reducer=512000000;
+set hive.exec.reducers.max=1099;
 -- ###########################
 -- optimizations for joins. 
 -- ###########################
@@ -78,6 +112,7 @@ set hive.default.fileformat=${env:BIG_BENCH_hive_default_fileformat_tmp_table};
 
 -- MAP join settings:
 -- set hive.auto.convert.join.noconditionaltask.size=100000;
+set hive.auto.convert.join.noconditionaltask.size=10000000;
 
 -- set hive.auto.convert.join=true;
 -- set hive.optimize.mapjoin.mapreduce=true;
@@ -109,9 +144,9 @@ set hive.default.fileformat=${env:BIG_BENCH_hive_default_fileformat_tmp_table};
 -- set hive.optimize.index.filter=true;
 -- set hive.stats.autogather=true;
 -- set hive.auto.convert.sortmerge.join=true;
--- set hive.vectorized.execution.enabled=true;
--- set hive.vectorized.execution.reduce.enabled=true;
--- set hive.cbo.enable=true;
+set hive.vectorized.execution.enabled=false;
+set hive.vectorized.execution.reduce.enabled=true;
+set hive.cbo.enable=true;
 -- set hive.compute.query.using.stats=true;
 -- set hive.stats.fetch.column.stats=true;
 -- set hive.stats.fetch.partition.stats=true;
@@ -132,6 +167,7 @@ set hive.vectorized.execution.reduce.enabled;
 set hive.stats.autogather;
 --input output
 set mapreduce.input.fileinputformat.split.minsize;
+--set mapreduce.input.fileinputformat.split.maxsize=134217728;
 set mapreduce.input.fileinputformat.split.maxsize;
 set hive.exec.reducers.bytes.per.reducer; 
 set hive.exec.reducers.max;
@@ -153,7 +189,7 @@ set hive.optimize.mapjoin.mapreduce;
 set hive.mapred.local.mem;
 set hive.mapjoin.smalltable.filesize; 
 set hive.mapjoin.localtask.max.memory.usage;
-set hive.optimize.skewjoin;
+--set hive.optimize.skewjoin=true;
 set hive.optimize.skewjoin.compiletime;
 -- filter optimizations (predicate pushdown to storage level)
 set hive.optimize.ppd;
@@ -169,7 +205,10 @@ set bigbench.hive.optimize.sampling.orderby.number;
 set bigbench.hive.optimize.sampling.orderby.percent;
 set hive.groupby.skewindata;
 set hive.exec.submit.local.task.via.child;
+set hive.input.format=org.apache.hadoop.hive.ql.io.HiveInputFormat;
 
+--for hive on spark
+--set spark.app.name=${hiveconf:QUERY_NAME};
 -- Database - DO NOT DELETE OR CHANGE
 CREATE DATABASE IF NOT EXISTS ${env:BIG_BENCH_DATABASE};
 use ${env:BIG_BENCH_DATABASE};

@@ -31,6 +31,7 @@ runModule () {
 
   echo "==============================================="
   echo "Running query : $QUERY_NAME"
+  
   echo "-----------------------------------------------"
   echo "benchmark phase: $BIG_BENCH_BENCHMARK_PHASE"
   echo "stream number  : $BIG_BENCH_STREAM_NUMBER"
